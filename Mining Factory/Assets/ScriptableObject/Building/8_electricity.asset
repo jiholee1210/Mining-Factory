@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c19fe807c0edf94687920b71338aeb5, type: 3}
+  m_Name: 8_electricity
+  m_EditorClassIdentifier: 
+  id: 8
+  name: "\uC804\uAE30 \uBC1C\uC804\uAE30"
+  desc: "\u3141\u3141\u3141\u3141"
+  icon: {fileID: 6702484529330088685, guid: b7ad65c7725ad3c478006e5d96988262, type: 3}
+  prefab: {fileID: 3947536963005584744, guid: 3cbb11d9257232f40b324df1bb497a6b, type: 3}
+  price: 100
+  slotIn: []
+  slotOut: []
+  reqIn: []
+  reqOut:
+    type: 0
+    amount: 0

@@ -1,0 +1,149 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Buildings
+  m_EditorClassIdentifier: 
+  m_GroupName: Buildings
+  m_GUID: 2c3c290850202e34482c92643575ae0f
+  m_SerializeEntries:
+  - m_GUID: 14b725453b915e84f848de3152e96418
+    m_Address: Assets/ScriptableObject/Building/7_exchange.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23feb6732a55d4b4299994afbc0ac1c0
+    m_Address: Assets/ScriptableObject/Building/1_thermal.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31754e79bd237034ea3ddee156faa3f1
+    m_Address: Assets/ScriptableObject/Building/106_bomb.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 38b272891c188d642aaab8e99c196e52
+    m_Address: Assets/ScriptableObject/Building/3_wind.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40c13d06efa9f9b428d978c09f30287a
+    m_Address: Assets/ScriptableObject/Building/104_nuclear.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48710573eba63ee42aced13d01f93b71
+    m_Address: Assets/ScriptableObject/Building/5_steam.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a97a4a0b0e53c54ca4e71d7cea6e4a4
+    m_Address: Assets/ScriptableObject/Building/103_wind.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ef5a9ba48238dd499ef2aa26113c85b
+    m_Address: Assets/ScriptableObject/Building/105_steam.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54e8a929c1b45f745a7a2a7a7e7e558d
+    m_Address: Assets/ScriptableObject/Building/100_basic.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 697dd3944d4da27418cbedd9ce444e23
+    m_Address: Assets/ScriptableObject/Building/0_jobcenter.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e850d0ce70503944a13d042d642f2ef
+    m_Address: Assets/ScriptableObject/Building/9_lab.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7941a60027beedc4bbed43fec2471ca6
+    m_Address: Assets/ScriptableObject/Building/2_hydro.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 881114c8df0a347429e92cbe59099c1f
+    m_Address: Assets/ScriptableObject/Building/108_professor.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e5bc09366c836b41900f413c55313ba
+    m_Address: Assets/ScriptableObject/Building/107_electricity.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2ec6c3ac2aed254ca4cc67c8189b54a
+    m_Address: Assets/ScriptableObject/Building/102_hydro.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d72ae937c93a0a84694a00c848de5d62
+    m_Address: Assets/ScriptableObject/Building/6_bomb.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d96dcab6c028bf4478df9dcea84cd4f6
+    m_Address: Assets/ScriptableObject/Building/109_master.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb0e41ecb03ef4a4d8233a0d948b8932
+    m_Address: Assets/ScriptableObject/Building/10_miner.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec5bb5e55852f204bb8225ac05c8595d
+    m_Address: Assets/ScriptableObject/Building/4_nuclear.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3c6276521e344842b7b66cf8056c907
+    m_Address: Assets/ScriptableObject/Building/101_thermal.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f79be153181fc9941a85b3cfa2b4e7fd
+    m_Address: Assets/ScriptableObject/Building/8_electricity.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Building
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 36f8a4395decfd24e8aabfedd3a3c460, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 308af671b0ffff247a6e5a0463e356e2, type: 2}
+    - {fileID: 11400000, guid: c4cfaf1c3b995ef48ba6a8534d55845e, type: 2}

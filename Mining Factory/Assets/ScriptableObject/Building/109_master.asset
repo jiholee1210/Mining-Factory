@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c19fe807c0edf94687920b71338aeb5, type: 3}
+  m_Name: 109_master
+  m_EditorClassIdentifier: 
+  id: 109
+  name: "\uC7A5\uC778"
+  desc: 
+  icon: {fileID: 6702484529330088685, guid: 12e26fa8a3de72f43965ac47f692f308, type: 3}
+  prefab: {fileID: 8953629531604615194, guid: 386d977d5ff82744d8fcf5e0aa807f8c, type: 3}
+  price: 100
+  slotIn: []
+  slotOut: []
+  reqIn: []
+  reqOut:
+    type: 0
+    amount: 0
