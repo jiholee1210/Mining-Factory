@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopManager : MonoBehaviour
+public class ShopManager : MonoBehaviour, ISelect
 {
     [SerializeField] private GameObject shopItemPrefab;
     [SerializeField] private Button shopButton;
@@ -17,7 +17,7 @@ public class ShopManager : MonoBehaviour
     void Start()
     {
         shopUnlock = DataManager.Instance.shopUnlock;
-        shopButton.onClick.AddListener(() => OpenShop());
+        shopButton.onClick.AddListener(() => Open());
         itemID.Add(0);
         itemID.Add(1);
         itemID.Add(2);
@@ -58,9 +58,8 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    private void OpenShop()
+    public void Open()
     {
-        UIManager.Instance.OpenShop();
         if (!isOpen)
         {
             isOpen = true;

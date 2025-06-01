@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,9 +57,11 @@ public class UIManager : MonoBehaviour
         detail.SetActive(false);
     }
 
-    public void OpenShop()
+    public IEnumerator OpenShop()
     {
         shop.SetTrigger("Open");
+        float len = shop.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(len);
     }
 
     public void SetIronText(int ironInput)
