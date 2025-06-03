@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Mine : MonoBehaviour, IBuilding
 {
     [SerializeField] private GameObject slotPrefab;
+    [SerializeField] private GameObject getIcon;
+    [SerializeField] private Transform iconPos;
 
     private int baseSlot = 2;
     private int minePower = 0;
@@ -20,12 +23,6 @@ public class Mine : MonoBehaviour, IBuilding
     {
         SetSlots();
         inventory = DataManager.Instance.inventory;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public int GetID()
@@ -81,8 +78,9 @@ public class Mine : MonoBehaviour, IBuilding
         while (minePower > 0)
         {
             inventory.iron += minePower;
-
-            UIManager.Instance.SetIronText(inventory.iron);
+            UIManager.Instance.SetMaterialText(6, inventory.iron, inventory.iron * 100);
+            GameObject icon = Instantiate(getIcon, iconPos);
+            icon.transform.GetChild(1).GetComponent<TMP_Text>().text = "+1";
 
             yield return waitForSeconds;
         }

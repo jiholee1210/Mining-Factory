@@ -149,8 +149,18 @@ public class DataManager : MonoBehaviour
 [Serializable]
 public class Inventory
 {
+    public int stone;
+    public int coal;
+    public int copper;
+    public int tin;
     public int gold;
     public int iron;
+    public int emerald;
+    public int magicStone;
+    public int copperBar;
+    public int bronzeBar;
+    public int ironBar;
+    public int goldBar;
     public int diamond;
     public int gear;
 

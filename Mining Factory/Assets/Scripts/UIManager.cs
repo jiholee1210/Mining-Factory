@@ -14,10 +14,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text input;
     [SerializeField] private TMP_Text canGenerate;
 
-    [SerializeField] private TMP_Text iron;
-    [SerializeField] private TMP_Text gold;
+    [SerializeField] private TMP_Text goldCoin;
     [SerializeField] private TMP_Text diamond;
     [SerializeField] private TMP_Text gear;
+
+    [SerializeField] private Transform[] sellItems;
 
     [SerializeField] private Animator shop;
 
@@ -64,14 +65,15 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(len);
     }
 
-    public void SetIronText(int ironInput)
+    public void SetMaterialText(int id, int count, int price)
     {
-        iron.text = ironInput.ToString();
+        sellItems[id].GetChild(1).GetComponent<TMP_Text>().text = count.ToString();
+        sellItems[id].GetChild(2).GetComponent<TMP_Text>().text = price.ToString();
     }
 
-    public void SetGoldText(int goldInput)
+    public void SetGoldCoinText(int goldInput)
     {
-        gold.text = goldInput.ToString();
+        goldCoin.text = goldInput.ToString();
     }
 
     public void SetDiamondText(int diamondInput)

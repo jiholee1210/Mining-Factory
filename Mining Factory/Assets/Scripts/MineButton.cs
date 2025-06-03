@@ -1,9 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class MineButtonScript : MonoBehaviour
 {
     [SerializeField] private SpriteMask cooldownMask;
     [SerializeField] private float cooldownTime = 2f;
+    [SerializeField] private GameObject getIcon;
+    [SerializeField] private Transform iconPos;
 
     private bool isOnCooldown = false;
     private float cooldownTimer = 0f;
@@ -27,7 +30,9 @@ public class MineButtonScript : MonoBehaviour
 
         // 채굴 처리
         inventory.iron += 1;
-        UIManager.Instance.SetIronText(inventory.iron);
+        UIManager.Instance.SetMaterialText(6, inventory.iron, inventory.iron * 100);
+        GameObject icon = Instantiate(getIcon, iconPos);
+        icon.transform.GetChild(1).GetComponent<TMP_Text>().text = "+1";
 
         // 쿨타임 시작
         StartCooldown();
