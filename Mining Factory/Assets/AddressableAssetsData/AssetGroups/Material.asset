@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Material
+  m_EditorClassIdentifier: 
+  m_GroupName: Material
+  m_GUID: a074595fecce97b49812fdd2d349ed1f
+  m_SerializeEntries:
+  - m_GUID: 1f5dc32cca5b9eb438a155d1e13c9bad
+    m_Address: Assets/ScriptableObject/Material/10_emerald.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2be59e4f937175145b6ae1f03cb4d834
+    m_Address: Assets/ScriptableObject/Material/7_gold.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30b128f1d1c1eda46a49c21b19cd122f
+    m_Address: Assets/ScriptableObject/Material/8_ironbar.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30edef305a747474ea0addf4e0fd2dd1
+    m_Address: Assets/ScriptableObject/Material/5_bronzebar.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39e51a9efab508f439eb672f12e722bf
+    m_Address: Assets/ScriptableObject/Material/6_iron.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 618320898e9785b4287d31a4f6e99934
+    m_Address: Assets/ScriptableObject/Material/9_goldbar.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6304059bd572b4145984fdcdfad9d102
+    m_Address: Assets/ScriptableObject/Material/1_coal.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f99cc97b72ad9c4b8056ee9e1fd571c
+    m_Address: Assets/ScriptableObject/Material/0_stone.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73f6615c76c106a40a75d1d1f74f3172
+    m_Address: Assets/ScriptableObject/Material/11_magicstone.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 848ec1c2f2f1ac640ab89550f6f12baa
+    m_Address: Assets/ScriptableObject/Material/3_tin.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85ee109309e590e4bba15a7f3a8b93aa
+    m_Address: Assets/ScriptableObject/Material/4_copperbar.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f132e05fcfeddba46b0946159ce3563f
+    m_Address: Assets/ScriptableObject/Material/2_copper.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Material
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 36f8a4395decfd24e8aabfedd3a3c460, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7a0f532ea9e39a34ba584906a351e1f6, type: 2}
+    - {fileID: 11400000, guid: 075da6dbd06fdc6459e8833e0427e692, type: 2}

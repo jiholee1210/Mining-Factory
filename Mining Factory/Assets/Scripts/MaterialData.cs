@@ -4,5 +4,7 @@ using UnityEngine;
 public class MaterialData : ScriptableObject
 {
     public int id;
+    public Sprite icon;
     public int price;
+    public int level;
 }

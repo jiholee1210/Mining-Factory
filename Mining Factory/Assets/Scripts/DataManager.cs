@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -9,6 +11,10 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance { get; private set; }
 
     private Dictionary<int, BuildingData> buildingDataDict;
+    private Dictionary<int, MaterialData> materialDataDict;
+
+    private Task _buildingLoadTask;
+    private Task _materialLoadTask;
 
     public Inventory inventory;
     public Field field;
@@ -23,7 +29,9 @@ public class DataManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        LoadBuildingData();
+        _buildingLoadTask = LoadBuildingData();
+        _materialLoadTask = LoadMaterialData();
+        LoadMaterialData();
 
         Init();
     }
@@ -129,7 +137,7 @@ public class DataManager : MonoBehaviour
         shopUnlock = JsonUtility.FromJson<ShopUnlock>(json);
     }
 
-    private async void LoadBuildingData()
+    private async Task LoadBuildingData()
     {
         buildingDataDict = new Dictionary<int, BuildingData>();
         var handle = Addressables.LoadAssetsAsync<BuildingData>("Building", building =>
@@ -140,27 +148,51 @@ public class DataManager : MonoBehaviour
         await handle.Task;
     }
 
+    private async Task LoadMaterialData()
+    {
+        materialDataDict = new Dictionary<int, MaterialData>();
+        var handle = Addressables.LoadAssetsAsync<MaterialData>("Material", material =>
+        {
+            materialDataDict[material.id] = material;
+        });
+
+        await handle.Task;
+    }
+
+    public Task WaitBuildindDataLoaded()
+    {
+        return _buildingLoadTask;
+    }
+
+    public Task WaitMaterialDataLoaded()
+    {
+        return _materialLoadTask;
+    }
+
     public BuildingData GetBuildingData(int id)
     {
         return buildingDataDict[id];
+    }
+
+    public MaterialData GetMaterialData(int id)
+    {
+        return materialDataDict[id];
+    }
+
+    public int[] GetMaterialsInLevel(int level)
+    {
+        return materialDataDict
+            .Where(mat => mat.Value.level == level)
+            .Select(mat => mat.Key)
+            .ToArray();
     }
 }
 
 [Serializable]
 public class Inventory
 {
-    public int stone;
-    public int coal;
-    public int copper;
-    public int tin;
+    public int[] materials = new int[12];
     public int gold;
-    public int iron;
-    public int emerald;
-    public int magicStone;
-    public int copperBar;
-    public int bronzeBar;
-    public int ironBar;
-    public int goldBar;
     public int diamond;
     public int gear;
 
@@ -177,6 +209,7 @@ public class Upgrade
 [Serializable]
 public class Field
 {
+    public int mineLevel = 1;
     public BuildingInfo[] buildingInfo;
     public SlotConnectInfo[] slotConnectInfos;
 }
