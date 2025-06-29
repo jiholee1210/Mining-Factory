@@ -31,7 +31,6 @@ public class DataManager : MonoBehaviour
         Instance = this;
         _buildingLoadTask = LoadBuildingData();
         _materialLoadTask = LoadMaterialData();
-        LoadMaterialData();
 
         Init();
     }
@@ -210,17 +209,21 @@ public class Upgrade
 public class Field
 {
     public int mineLevel = 1;
-    public BuildingInfo[] buildingInfo;
-    public SlotConnectInfo[] slotConnectInfos;
+    public List<BuildingInfo> buildingInfo = new();
+    public List<SlotConnectInfo> slotConnectInfos = new();
 }
 
 [Serializable]
 public class BuildingInfo
 {
-    public int uid;
+    public string uid;
     public int buildingID;
+    public int level;
     public Vector3 pos;
-    public int[] slotUid;
+    public List<string> inputBuilding = new();
+    public List<string> outputBuilding = new();
+    public bool canGenerate = false;
+    public int inputValue;
 }
 
 [Serializable]

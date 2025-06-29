@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,12 +8,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [SerializeField] private GameObject detail;
+    [SerializeField] private Transform detail;
 
-    [SerializeField] private Animator inventory;
-    [SerializeField] private TMP_Text name;
-    [SerializeField] private TMP_Text input;
-    [SerializeField] private TMP_Text canGenerate;
+    [SerializeField] private Animator invenAnimator;
 
     [SerializeField] private TMP_Text goldCoin;
     [SerializeField] private TMP_Text diamond;
@@ -21,6 +19,22 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform[] sellItems;
 
     [SerializeField] private Animator shop;
+
+    [SerializeField] private GameObject upgradeReqPrefab;
+    [SerializeField] private Transform reqParent;
+
+    private Inventory inventory;
+    private Dictionary<int, string> reqType = new()
+    {
+        { 0, "에너지" },
+        { 1, "전기" },
+        { 2, "수작업" },
+        { 3, "화력" },
+        { 4, "수력" },
+        { 5, "풍력" },
+        { 6, "원자력" },
+        { 7, "채굴력" }
+    };
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -31,31 +45,56 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        
+        inventory = DataManager.Instance.inventory;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            inventory.SetTrigger("Open");
+            invenAnimator.SetTrigger("Open");
         }
     }
 
-    public void OpenDetail(int id, IBuilding building)
+    public void OpenDetail(BuildingInfo input)
     {
         Debug.Log("detail 오픈 : ");
+        BuildingData building = DataManager.Instance.GetBuildingData(input.buildingID);
 
-        detail.SetActive(true);
-        name.text = DataManager.Instance.GetBuildingData(id).name;
-        input.text = building.GetCurInput().ToString();
-        canGenerate.text = building.GetCanGenerate().ToString();
+        detail.gameObject.SetActive(true);
+        Transform buildingInfo = detail.GetChild(0);
+        Transform upgradeInfo = detail.GetChild(1);
+        buildingInfo.GetChild(0).GetComponent<TMP_Text>().text = building.name;
+        buildingInfo.GetChild(1).GetComponent<TMP_Text>().text = "";
+        foreach (ReqAmount reqAmount in building.reqIn)
+        {
+            buildingInfo.GetChild(1).GetComponent<TMP_Text>().text += reqType[(int)reqAmount.type] + " " + input.inputValue + " / " + reqAmount.amount + "\n";
+        }
+        buildingInfo.GetChild(3).GetComponent<TMP_Text>().text = input.canGenerate ? building.reqOut.amount + " " + reqType[(int)building.reqOut.type] : "0 " + reqType[(int)building.reqOut.type];
+
+        Debug.Log(input.level);
+        foreach (Transform req in reqParent)
+        {
+            Destroy(req.gameObject);
+        }
+
+        foreach (Material material in building.reqUpgrade[input.level].materials)
+        {
+            GameObject upObject = Instantiate(upgradeReqPrefab, reqParent);
+            upObject.transform.GetChild(0).GetComponent<Image>().sprite = DataManager.Instance.GetMaterialData(material.id).icon;
+            upObject.transform.GetChild(0).GetComponent<Image>().SetNativeSize();
+
+            int inven = inventory.materials[material.id];
+            int req = material.count;
+            upObject.transform.GetChild(1).GetComponent<TMP_Text>().text = inven + " / " + req;
+        }
+        upgradeInfo.GetChild(2).GetChild(1).GetComponent<TMP_Text>().text = building.reqUpgrade[input.level].gold.ToString();
     }
 
     public void CloseDetail()
     {
         Debug.Log("detail 비활성화");
-        detail.SetActive(false);
+        detail.gameObject.SetActive(false);
     }
 
     public IEnumerator OpenShop()

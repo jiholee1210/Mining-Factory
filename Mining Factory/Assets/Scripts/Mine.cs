@@ -23,6 +23,8 @@ public class Mine : MonoBehaviour, IBuilding
 
     private List<GameObject> linkedObject = new();
     private Dictionary<int, float> weightPerLevel = new();
+
+    private BuildingInfo buildingInfo;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -90,9 +92,9 @@ public class Mine : MonoBehaviour, IBuilding
         return idList[Random.Range(0, idList.Length)];
     }
 
-    public int GetID()
+    public string GetID()
     {
-        throw new System.NotImplementedException();
+        return buildingInfo.uid;
     }
 
     public void SetBuildMode()
@@ -117,25 +119,30 @@ public class Mine : MonoBehaviour, IBuilding
         }
     }
 
-    public void SetState(int id)
+    public void SetState()
     {
-        throw new System.NotImplementedException();
+
+    }
+    
+    public void SetBuildingInfo(BuildingInfo input)
+    {
+        buildingInfo = input;
     }
 
-    public void SetConnect(GameObject otherObject, bool input)
+    public void SetConnect(BuildingInfo otherBuilding, bool input, GameObject otherObject)
     {
         // 채굴력 수치에 따라 철광석 채굴 진행
-        if (otherObject.GetComponent<IBuilding>().GetCanGenerate())
+        if (otherBuilding.canGenerate)
         {
-            int index = otherObject.GetComponent<IBuilding>().GetID();
+            int index = otherBuilding.buildingID;
 
             minePower += DataManager.Instance.GetBuildingData(index).reqOut.amount;
-
+            mineButton.SetPower(minePower);
             if (mining == null)
             {
-                mining = StartCoroutine(ActivateMining());
+                //mining = StartCoroutine(ActivateMining());
             }
-        } 
+        }
     }
 
     private IEnumerator ActivateMining()
@@ -158,9 +165,9 @@ public class Mine : MonoBehaviour, IBuilding
         mining = null;
     }
 
-    public void SetDisconnect(GameObject otherObject, bool input)
+    public void SetDisconnect(BuildingInfo otherBuilding, bool input, GameObject otherObject)
     {
-        int index = otherObject.GetComponent<IBuilding>().GetID();
+        int index = otherBuilding.buildingID;
 
         minePower -= DataManager.Instance.GetBuildingData(index).reqOut.amount;
 
@@ -176,16 +183,21 @@ public class Mine : MonoBehaviour, IBuilding
         return true;
     }
 
-    public void CheckConnection(GameObject otherObject)
+    public void CheckConnection(BuildingInfo otherBuilding)
     {
-        if (!otherObject.GetComponent<IBuilding>().GetCanGenerate())
+        if (!otherBuilding.canGenerate)
         {
-            SetDisconnect(otherObject, false);
+            SetDisconnect(otherBuilding, false, null);
         }
     }
 
-    public float GetCurInput()
+    public int GetCurInput()
     {
         return 0;
+    }
+
+    public BuildingInfo GetBuildingInfo()
+    {
+        return buildingInfo;
     }
 }

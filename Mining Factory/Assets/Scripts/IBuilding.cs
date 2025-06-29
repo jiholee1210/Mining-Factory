@@ -3,14 +3,16 @@ using UnityEngine;
 public interface IBuilding
 {
     void SetSlots();
-    void SetState(int id);
+    void SetState();
     void SetBuildMode();
-    void SetConnect(GameObject gameObject, bool input);
-    void SetDisconnect(GameObject gameObject, bool input);
+    void SetConnect(BuildingInfo buildingInfo, bool input, GameObject otherObject);
+    void SetDisconnect(BuildingInfo buildingInfo, bool input, GameObject otherObject);
+    void SetBuildingInfo(BuildingInfo buildingInfo);
 
-    int GetID();
+    string GetID();
     bool GetCanGenerate();
-    float GetCurInput();
+    int GetCurInput();
+    BuildingInfo GetBuildingInfo();
 
-    void CheckConnection(GameObject gameObject);
+    void CheckConnection(BuildingInfo buildingInfo);
 }

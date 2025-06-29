@@ -12,12 +12,13 @@ public class Worker : MonoBehaviour, IBuilding
     private float sizeY;
     private float sizeX;
     private bool canBuild = true;
-    private int id;
 
     private GameObject outputObject;
 
     private bool isBuilding = false;
     private bool slotSetting = false;
+
+    private BuildingInfo buildingInfo;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -55,12 +56,12 @@ public class Worker : MonoBehaviour, IBuilding
         int maxCount = 0;
         int curIndex = 0;
 
-        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(id).slotOut)
+        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).slotOut)
         {
             maxCount += slotInfo.count;
         }
 
-        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(id).slotOut)
+        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).slotOut)
         {
             for (int i = 0; i < maxCount; i++)
             {
@@ -76,14 +77,19 @@ public class Worker : MonoBehaviour, IBuilding
         }
     }
 
-    public void SetState(int itemID)
+    public void SetState()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         SetBuildMode();
-        id = itemID;
         spriteRenderer.color = new Color(1f, 1f, 1f, 0.6f);
 
         SlotBuildMode();
+    }
+
+    public void SetBuildingInfo(BuildingInfo input)
+    {
+        buildingInfo = input;
+        buildingInfo.canGenerate = true;
     }
 
     private void SlotBuildMode()
@@ -96,12 +102,12 @@ public class Worker : MonoBehaviour, IBuilding
         }
     }
 
-    public int GetID()
+    public string GetID()
     {
-        return id;
+        return buildingInfo.uid;
     }
 
-    public float GetCurInput()
+    public int GetCurInput()
     {
         return 0;
     }
@@ -111,19 +117,19 @@ public class Worker : MonoBehaviour, IBuilding
         isBuilding = !isBuilding;
     }
 
-    public void SetConnect(GameObject gameObject, bool input)
+    public void SetConnect(BuildingInfo otherBuilding, bool input, GameObject otherObject)
     {
-        outputObject = gameObject;
+        outputObject = otherObject;
         animator.SetBool("IsConnect", true);
     }
 
-    public void SetDisconnect(GameObject gameObject, bool input)
+    public void SetDisconnect(BuildingInfo otherBuilding, bool input, GameObject otherObject)
     {
         outputObject = null;
         animator.SetBool("IsConnect", false);
     }
 
-    public void CheckConnection(GameObject otherObject)
+    public void CheckConnection(BuildingInfo otherBuilding)
     {
         
     }
@@ -131,7 +137,7 @@ public class Worker : MonoBehaviour, IBuilding
     private void SelectItem()
     {
         Debug.Log("아이템 선택");
-        BuildingManager.Instance.SelectItem(this);
+        BuildingManager.Instance.SelectItem(buildingInfo, this);
     }
 
     public bool GetCanGenerate()
@@ -211,6 +217,10 @@ public class Worker : MonoBehaviour, IBuilding
                 canBuild = true;
             }
         }
-        
+    }
+
+    public BuildingInfo GetBuildingInfo()
+    {
+        return buildingInfo;
     }
 }

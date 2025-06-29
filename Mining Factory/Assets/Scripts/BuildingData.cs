@@ -35,6 +35,20 @@ public class ReqAmount
     public int amount;
 }
 
+[Serializable]
+public class ReqUpgrade
+{
+    public Material[] materials;
+    public int gold;
+}
+
+[Serializable]
+public class Material
+{
+    public int id;
+    public int count;
+}
+
 [CreateAssetMenu(fileName = "BuildingData", menuName = "BuildingData", order = 0)]
 public class BuildingData : ScriptableObject
 {
@@ -50,4 +64,6 @@ public class BuildingData : ScriptableObject
 
     public ReqAmount[] reqIn;
     public ReqAmount reqOut;
+
+    public ReqUpgrade[] reqUpgrade;
 }

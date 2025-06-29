@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BuildingPlacer : MonoBehaviour
@@ -5,7 +6,8 @@ public class BuildingPlacer : MonoBehaviour
     public static BuildingPlacer Instance { get; private set; }
     [SerializeField] private Transform buildingList;
     [SerializeField] private GameObject slotPrefab;
-    
+
+    private Field field;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -14,7 +16,7 @@ public class BuildingPlacer : MonoBehaviour
 
     void Start()
     {
-        
+        field = DataManager.Instance.field;
     }
 
     // Update is called once per frame
@@ -32,6 +34,14 @@ public class BuildingPlacer : MonoBehaviour
         item.transform.position = pos;
         // 건축 중 상태로 설정
         // 건축 중 상태에서 건축 가능 상태 -> e키 입력 시 해당 자리에 설치
-        item.GetComponent<IBuilding>().SetState(itemID);
+        BuildingInfo buildingInfo = new BuildingInfo();
+        buildingInfo.uid = Guid.NewGuid().ToString();
+        buildingInfo.buildingID = itemID;
+        buildingInfo.level = 0;
+        buildingInfo.pos = pos;
+
+        item.GetComponent<IBuilding>().SetState();
+        item.GetComponent<IBuilding>().SetBuildingInfo(buildingInfo);
+        field.buildingInfo.Add(buildingInfo);
     }
 }

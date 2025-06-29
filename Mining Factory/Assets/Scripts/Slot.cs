@@ -69,10 +69,10 @@ public class Slot : MonoBehaviour
     public void Disconnect()
     {
         isConnecting = false;
-
+        Debug.Log("연결 해제");
         bool otherSlotState = otherSlot.GetComponent<Slot>().GetSlotState();
 
-        transform.parent.GetComponent<IBuilding>().SetDisconnect(otherSlot.transform.parent.gameObject, otherSlotState);
+        transform.parent.GetComponent<IBuilding>().SetDisconnect(otherSlot.transform.parent.GetComponent<IBuilding>().GetBuildingInfo(), otherSlotState, otherSlot.transform.parent.gameObject);
 
         line = null;
         otherSlot = null;
@@ -155,8 +155,8 @@ public class Slot : MonoBehaviour
             otherSlot.GetComponent<Slot>().Connect(line, gameObject);
             bool otherSlotState = otherSlot.GetComponent<Slot>().GetSlotState();
 
-            transform.parent.GetComponent<IBuilding>().SetConnect(otherSlot.transform.parent.gameObject, otherSlotState);
-            otherSlot.transform.parent.GetComponent<IBuilding>().SetConnect(transform.parent.gameObject, isInputSlot);
+            transform.parent.GetComponent<IBuilding>().SetConnect(otherSlot.transform.parent.GetComponent<IBuilding>().GetBuildingInfo(), otherSlotState, otherSlot.transform.parent.gameObject);
+            otherSlot.transform.parent.GetComponent<IBuilding>().SetConnect(transform.parent.GetComponent<IBuilding>().GetBuildingInfo(), isInputSlot, transform.parent.gameObject);
         }
         else
         {

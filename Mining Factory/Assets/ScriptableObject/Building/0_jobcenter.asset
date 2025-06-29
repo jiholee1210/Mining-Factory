@@ -30,3 +30,10 @@ MonoBehaviour:
   reqOut:
     type: 0
     amount: 1
+  reqUpgrade:
+  - materials:
+    - id: 0
+      count: 10
+    - id: 1
+      count: 20
+    gold: 1000

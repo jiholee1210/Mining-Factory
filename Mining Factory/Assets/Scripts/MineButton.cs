@@ -15,6 +15,8 @@ public class MineButton : MonoBehaviour
     private Vector3 maskStartPos;
     private Vector3 maskEndPos;
 
+    private int minePower;
+
     private Inventory inventory;
     private Field field;
     private Dictionary<int, float> weightPerLevel = new();
@@ -36,11 +38,11 @@ public class MineButton : MonoBehaviour
         int mID = GetMaterialInLevel();
         MaterialData materialData = DataManager.Instance.GetMaterialData(mID);
         
-        inventory.materials[mID] += 1;
+        inventory.materials[mID] += minePower;
         UIManager.Instance.SetMaterialText(mID, inventory.materials[mID], inventory.materials[mID] * materialData.price);
         GameObject icon = Instantiate(getIcon, iconPos);
         icon.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = materialData.icon;
-        icon.transform.GetChild(1).GetComponent<TMP_Text>().text = "+1";
+        icon.transform.GetChild(1).GetComponent<TMP_Text>().text = "+" + minePower;
 
         // 쿨타임 시작
         StartCooldown();
@@ -70,6 +72,11 @@ public class MineButton : MonoBehaviour
     {
         isOnCooldown = true;
         cooldownTimer = 0f;
+    }
+
+    public void SetPower(int power)
+    {
+        minePower = power;
     }
 
     public void SetWeight()

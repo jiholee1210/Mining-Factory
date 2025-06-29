@@ -16,16 +16,15 @@ public class Miner : MonoBehaviour, IBuilding
     private List<GameObject> inputGameobject = new();
     private GameObject outputGameobject;
 
+    private BuildingInfo buildingInfo;
+
     private int blockCount = 0;
     private float sizeX;
     private float sizeY;
     private bool canBuild = true;
-    private int id;
-    private float curInput = 0;
 
     private bool isBuilding = false;
     private bool slotSetting = false;
-    private bool canGenerate = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -63,13 +62,13 @@ public class Miner : MonoBehaviour, IBuilding
         slotSetting = true;
         int maxCount = 0;
 
-        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(id).slotIn)
+        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).slotIn)
         {
             maxCount += slotInfo.count;
         }
 
         int curIndex = 0;
-        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(id).slotIn)
+        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).slotIn)
         {
             for (int i = 0; i < slotInfo.count; i++)
             {
@@ -86,13 +85,13 @@ public class Miner : MonoBehaviour, IBuilding
         }
 
         maxCount = 0;
-        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(id).slotOut)
+        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).slotOut)
         {
             maxCount += slotInfo.count;
         }
 
         curIndex = 0;
-        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(id).slotOut)
+        foreach (SlotInfo slotInfo in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).slotOut)
         {
             for (int i = 0; i < maxCount; i++)
             {
@@ -108,14 +107,18 @@ public class Miner : MonoBehaviour, IBuilding
         }
     }
 
-    public void SetState(int itemID)
+    public void SetState()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         SetBuildMode();
-        id = itemID;
         spriteRenderer.color = new Color(1f, 1f, 1f, 0.6f);
 
         SlotBuildMode();
+    }
+
+    public void SetBuildingInfo(BuildingInfo input)
+    {
+        buildingInfo = input;
     }
 
     private void SlotBuildMode()
@@ -128,14 +131,14 @@ public class Miner : MonoBehaviour, IBuilding
         }
     }
 
-    public int GetID()
+    public string GetID()
     {
-        return id;
+        return buildingInfo.uid;
     }
 
-    public float GetCurInput()
+    public int GetCurInput()
     {
-        return curInput;
+        return buildingInfo.inputValue;
     }
 
     public void SetBuildMode()
@@ -143,37 +146,42 @@ public class Miner : MonoBehaviour, IBuilding
         isBuilding = !isBuilding;
     }
 
-    public void SetConnect(GameObject otherObject, bool input)
+    public BuildingInfo GetBuildingInfo()
+    {
+        return buildingInfo;
+    }
+
+    public void SetConnect(BuildingInfo otherBuilding, bool input, GameObject otherObject)
     {
         if (!input)
         {
-            if (!inputGameobject.Contains(otherObject))
+            if (!buildingInfo.inputBuilding.Contains(otherBuilding.uid))
             {
-                inputGameobject.Add(otherObject);    
+                buildingInfo.inputBuilding.Add(otherBuilding.uid);
             }
             int index = 0;
-            float inputWorker = 0;
+            int inputWorker = 0;
             EnergyType energyType;
-            foreach (ReqAmount reqAmount in DataManager.Instance.GetBuildingData(id).reqIn)
+            foreach (ReqAmount reqAmount in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).reqIn)
             {
-                index = otherObject.GetComponent<IBuilding>().GetID();
+                index = otherBuilding.buildingID;
 
                 energyType = DataManager.Instance.GetBuildingData(index).reqOut.type;
-                Debug.Log("채굴기 : " + otherObject.GetComponent<IBuilding>().GetCanGenerate() + " " + reqAmount.type.Equals(energyType));
-                if (reqAmount.type.Equals(energyType) && otherObject.GetComponent<IBuilding>().GetCanGenerate())
+                Debug.Log("채굴기 : " + otherBuilding.canGenerate + " " + reqAmount.type.Equals(energyType));
+                if (reqAmount.type.Equals(energyType) && otherBuilding.canGenerate)
                 {
                     inputWorker = DataManager.Instance.GetBuildingData(index).reqOut.amount;
 
-                    curInput += inputWorker;
-                    CheckActivate(curInput, reqAmount.amount);
+                    buildingInfo.inputValue += inputWorker;
+                    CheckActivate(buildingInfo.inputValue, reqAmount.amount);
                 }
             }
 
             if (outputGameobject != null)
             {
-                outputGameobject.GetComponent<IBuilding>().SetConnect(gameObject, false);
+                outputGameobject.GetComponent<IBuilding>().SetConnect(buildingInfo, false, gameObject);
             }
-            
+
         }
         else
         {
@@ -181,28 +189,28 @@ public class Miner : MonoBehaviour, IBuilding
         }
     }
 
-    public void SetDisconnect(GameObject otherObject, bool input)
+    public void SetDisconnect(BuildingInfo otherBuilding, bool input, GameObject otherObject)
     {
         if (!input)
         {
-            foreach (ReqAmount reqAmount in DataManager.Instance.GetBuildingData(id).reqIn)
+            foreach (ReqAmount reqAmount in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).reqIn)
             {
-                int id = otherObject.GetComponent<IBuilding>().GetID();
+                int id = otherBuilding.buildingID;
 
-                float inputWorker = DataManager.Instance.GetBuildingData(id).reqOut.amount;
+                int inputWorker = DataManager.Instance.GetBuildingData(id).reqOut.amount;
 
                 EnergyType energyType = DataManager.Instance.GetBuildingData(id).reqOut.type;
-                if (reqAmount.type.Equals(energyType) && otherObject.GetComponent<IBuilding>().GetCanGenerate())
+                if (reqAmount.type.Equals(energyType) && otherBuilding.canGenerate)
                 {
-                    curInput -= inputWorker;
-                    CheckActivate(curInput, reqAmount.amount);
+                    buildingInfo.inputValue -= inputWorker;
+                    CheckActivate(buildingInfo.inputValue, reqAmount.amount);
                 }
             }
             inputGameobject.Remove(otherObject);
 
             if (outputGameobject != null)
             {
-                outputGameobject.GetComponent<IBuilding>().CheckConnection(gameObject);
+                outputGameobject.GetComponent<IBuilding>().CheckConnection(buildingInfo);
                 // 인풋 오브젝트의 cangenerate 값 검사 + 수치 검사
             }
         }
@@ -212,34 +220,35 @@ public class Miner : MonoBehaviour, IBuilding
         }
     }
 
-    public void CheckConnection(GameObject otherObject)
+    public void CheckConnection(BuildingInfo otherBuilding)
     {
-        if (!otherObject.GetComponent<IBuilding>().GetCanGenerate())
+        Debug.Log(otherBuilding.canGenerate);
+        if (!otherBuilding.canGenerate)
         {
-            int index = otherObject.GetComponent<IBuilding>().GetID();
+            int index = otherBuilding.buildingID;
 
-            float inputWorker = DataManager.Instance.GetBuildingData(index).reqOut.amount;
+            int inputWorker = DataManager.Instance.GetBuildingData(index).reqOut.amount;
 
             EnergyType energyType = DataManager.Instance.GetBuildingData(index).reqOut.type;
 
-            foreach (ReqAmount reqAmount in DataManager.Instance.GetBuildingData(id).reqIn)
+            foreach (ReqAmount reqAmount in DataManager.Instance.GetBuildingData(buildingInfo.buildingID).reqIn)
             {
                 if (reqAmount.type.Equals(energyType))
                 {
-                    curInput -= inputWorker;
-                    CheckActivate(curInput, reqAmount.amount);
+                    buildingInfo.inputValue -= inputWorker;
+                    CheckActivate(buildingInfo.inputValue, reqAmount.amount);
                 }
             }
         }
         if (outputGameobject != null)
         {
-            outputGameobject.GetComponent<IBuilding>().CheckConnection(gameObject);
+            outputGameobject.GetComponent<IBuilding>().CheckConnection(buildingInfo);
         }
     }
 
     public bool GetCanGenerate()
     {
-        return canGenerate;
+        return buildingInfo.canGenerate;
     }
 
     private void CheckActivate(float input, float req)
@@ -247,12 +256,12 @@ public class Miner : MonoBehaviour, IBuilding
         // 기준치를 넘어섰는 지 확인 후 애니메이터 수정
         if (input >= req)
         {
-            canGenerate = true;
+            buildingInfo.canGenerate = true;
             animator.SetBool("IsConnect", true);
         }
         else
         {
-            canGenerate = false;
+            buildingInfo.canGenerate = false;
             animator.SetBool("IsConnect", false);
         }
     }
@@ -260,7 +269,7 @@ public class Miner : MonoBehaviour, IBuilding
     private void SelectItem()
     {
         Debug.Log("아이템 선택");
-        BuildingManager.Instance.SelectItem(this);
+        BuildingManager.Instance.SelectItem(buildingInfo, this);
     }
 
     private void OnMouseDown()
