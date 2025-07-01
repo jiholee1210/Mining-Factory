@@ -40,6 +40,7 @@ public class MineButton : MonoBehaviour
         
         inventory.materials[mID] += minePower;
         UIManager.Instance.SetMaterialText(mID, inventory.materials[mID], inventory.materials[mID] * materialData.price);
+        UIManager.Instance.RenewDetail();
         GameObject icon = Instantiate(getIcon, iconPos);
         icon.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = materialData.icon;
         icon.transform.GetChild(1).GetComponent<TMP_Text>().text = "+" + minePower;

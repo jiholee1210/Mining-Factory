@@ -36,8 +36,7 @@ public class UIManager : MonoBehaviour
         { 7, "채굴력" }
     };
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    private BuildingInfo curBuilding;
     void Awake()
     {
         Instance = this;
@@ -59,6 +58,7 @@ public class UIManager : MonoBehaviour
     public void OpenDetail(BuildingInfo input)
     {
         Debug.Log("detail 오픈 : ");
+        curBuilding = input;
         BuildingData building = DataManager.Instance.GetBuildingData(input.buildingID);
 
         detail.gameObject.SetActive(true);
@@ -91,9 +91,34 @@ public class UIManager : MonoBehaviour
         upgradeInfo.GetChild(2).GetChild(1).GetComponent<TMP_Text>().text = building.reqUpgrade[input.level].gold.ToString();
     }
 
+    public void RenewDetail() {
+        if(curBuilding == null) return;
+
+        BuildingData building = DataManager.Instance.GetBuildingData(curBuilding.buildingID);
+        Transform buildingInfo = detail.GetChild(0);
+
+        buildingInfo.GetChild(1).GetComponent<TMP_Text>().text = "";
+        foreach (ReqAmount reqAmount in building.reqIn)
+        {
+            buildingInfo.GetChild(1).GetComponent<TMP_Text>().text += reqType[(int)reqAmount.type] + " " + curBuilding.inputValue + " / " + reqAmount.amount + "\n";
+        }
+        buildingInfo.GetChild(3).GetComponent<TMP_Text>().text = curBuilding.canGenerate ? building.reqOut.amount + " " + reqType[(int)building.reqOut.type] : "0 " + reqType[(int)building.reqOut.type];
+
+        int count = 0;
+        foreach(Material material in building.reqUpgrade[curBuilding.level].materials) {
+            Transform upObject = reqParent.GetChild(count++);
+
+            int inven = inventory.materials[material.id];
+            int req = material.count;
+
+            upObject.GetChild(1).GetComponent<TMP_Text>().text = inven + " / " + req;
+        }
+    }
+
     public void CloseDetail()
     {
         Debug.Log("detail 비활성화");
+        curBuilding = null;
         detail.gameObject.SetActive(false);
     }
 
