@@ -12,9 +12,11 @@ public class DataManager : MonoBehaviour
 
     private Dictionary<int, BuildingData> buildingDataDict;
     private Dictionary<int, MaterialData> materialDataDict;
+    private Dictionary<int, UpgradeData> upgradeDataDict;
 
     private Task _buildingLoadTask;
     private Task _materialLoadTask;
+    private Task _upgradeLoadTask;
 
     public Inventory inventory;
     public Field field;
@@ -31,6 +33,7 @@ public class DataManager : MonoBehaviour
         Instance = this;
         _buildingLoadTask = LoadBuildingData();
         _materialLoadTask = LoadMaterialData();
+        _upgradeLoadTask = LoadUpgradeData();
 
         Init();
     }
@@ -158,6 +161,17 @@ public class DataManager : MonoBehaviour
         await handle.Task;
     }
 
+    private async Task LoadUpgradeData()
+    {
+        upgradeDataDict = new Dictionary<int, UpgradeData>();
+        var handle = Addressables.LoadAssetsAsync<UpgradeData>("Upgrade", upgrade =>
+        {
+            upgradeDataDict[upgrade.id] = upgrade;
+        });
+
+        await handle.Task;
+    }
+
     public Task WaitBuildindDataLoaded()
     {
         return _buildingLoadTask;
@@ -185,6 +199,11 @@ public class DataManager : MonoBehaviour
             .Select(mat => mat.Key)
             .ToArray();
     }
+
+    public UpgradeData GetUpgradeData(int id)
+    {
+        return upgradeDataDict[id];
+    }
 }
 
 [Serializable]
@@ -202,7 +221,8 @@ public class Inventory
 [Serializable]
 public class Upgrade
 {
-
+    public List<int> canUpgrade = new();
+    public List<int> complete = new();
 }
 
 [Serializable]

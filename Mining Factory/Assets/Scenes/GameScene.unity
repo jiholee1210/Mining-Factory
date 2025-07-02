@@ -6454,6 +6454,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37880e78be54e4499b5c145fab02341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradePrefab: {fileID: 0}
+  upgradeParent: {fileID: 0}
 --- !u!1 &1094511803
 GameObject:
   m_ObjectHideFlags: 0
@@ -7684,6 +7686,9 @@ MonoBehaviour:
     mineLevel: 1
     buildingInfo: []
     slotConnectInfos: []
+  upgrade:
+    canUpgrade: 
+    complete: 
   shopUnlock:
     unlockList: []
 --- !u!4 &1272905829
